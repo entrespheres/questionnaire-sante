@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questionnaire Neurotransmetteurs</title>
+<style>
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 20px;
+  background: linear-gradient(135deg, #e0f7fa, #f9fbe7);
+}
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  border-left: 6px solid #00acc1;
+}
+.progress-container {
+  width: 100%;
+  background: #e0f2f1;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  height: 20px;
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00acc1, #00796b);
+  transition: width 0.4s ease;
+}
+.progress-text {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #006064;
+}
+h1 {
+  color: #006064;
+  text-align: center;
+  margin-bottom: 30px;
+}
+legend {
+  color: #00796b;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+}
+.score {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #007BFF;
+}
+button {
+  padding: 10px 20px;
+  background-color: #00796b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto;
+}
+button:hover {
+  background-color: #004d40;
+}
+input[type="email"] {
+  padding: 8px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+@media (max-width: 600px) {
+  body {
+    margin: 10px;
+  }
+  .card {
+    padding: 15px;
+    border-left: 4px solid #00acc1;
+  }
+  h1 {
+    font-size: 1.5em;
+  }
+  legend {
+    font-size: 1em;
+  }
+  button {
+    width: 100%;
+    font-size: 14px;
+  }
+  input[type="email"] {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<h1>Questionnaire Neurotransmetteurs</h1>
+
+<div class="progress-container">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+<div class="progress-text" id="progressText">0% complété</div>
+
+<form id="healthForm" action="#" method="POST">
+  <input type="hidden" name="Résumé" id="summaryField">
+
+  <div id="categories"></div>
+
+  <div class="card">
+    <div class="score">Score Total D.N.S. : <span id="scoreTotal">0</span></div>
+  </div>
+
+  <div class="card">
+    <label>Votre email : <input type="email" name="Email" required></label><br><br>
+    <button type="submit">Envoyer mes réponses</button>
+  </div>
+</form>
+
+<script>
+const categoriesData = {
+  'Dopamine': [
+    "Vous sentez-vous moins motivé(e) ?",
+    "Portez-vous moins d’intérêt à vos occupations ?",
+    "Avez-vous tendance à vous replier sur vous ?",
+    "Etes-vous moins attiré(e) par vos hobbies ?",
+    "Recherchez-vous moins les contacts avec vos ami(e)s ?",
+    "Avez-vous des problèmes de concentration ?",
+    "Vous sentez-vous l’esprit moins créatif ?",
+    "Avez-vous des difficultés à faire de nouveaux projets ?",
+    "Votre sommeil est-il agité, non reposant, insatisfaisant ?",
+    "Vous sentez-vous fatigué(e) ?"
+  ],
+  'Noradrénaline': [
+    "Vous sentez-vous déprimé(e) ?",
+    "Souffrez-vous moralement ?",
+    "Avez-vous l’impression de fonctionner au ralenti ?",
+    "Ressentez-vous moins de désir ?",
+    "Avez-vous des difficultés à prendre du plaisir ?",
+    "Ressentez-vous une baisse d’appétit sexuel ?",
+    "Avez-vous des difficultés avec votre mémoire ?",
+    "Avez-vous des difficultés pour apprendre ?",
+    "Vous sentez-vous mal aimé(e) ?",
+    "Etes-vous fatigué(e) moralement ?"
+  ],
+  'Sérotonine': [
+    "Vous sentez-vous irritable ?",
+    "Vous sentez-vous impatient(e) ?",
+    "Avez-vous des difficultés à supporter les frustrations et les contraintes ?",
+    "Vous sentez-vous agressif(ve) ?",
+    "Vous sentez-vous incompris(e) ?",
+    "Etes-vous attiré(e) par le sucré ou le chocolat en fin de journée ?",
+    "Vous sentez-vous dépendant(e) d’activité répétitive ? (tabac, alcool, grignotage, sport intensif, achats compulsifs)",
+    "Avez-vous des difficultés à vous endormir ?",
+    "Vous sentez-vous vulnérable au stress ?",
+    "Vous sentez-vous « d’humeur changeante » ?"
+  ]
+};
+
+const form = document.getElementById('healthForm');
+const container = document.getElementById('categories');
+
+Object.keys(categoriesData).forEach(cat => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  let html = `<fieldset><legend>${cat}</legend>`;
+  categoriesData[cat].forEach(q => {
+    html += `<label>${q}
+      <select name="${cat}" data-category="${cat}">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </label>`;
+  });
+  html += `<div class="score">Score ${cat[0]}: <span id="score${cat}">0</span></div></fieldset>`;
+  card.innerHTML = html;
+  container.appendChild(card);
+});
+
+function updateProgress() {
+  const selects = form.querySelectorAll('select');
+  const answered = Array.from(selects).filter(sel => sel.value !== "0").length;
+  const percentage = Math.round((answered / selects.length) * 100);
+  document.getElementById('progressBar').style.width = percentage + '%';
+  document.getElementById('progressText').textContent = percentage + '% complété';
+}
+
+form.addEventListener('change', () => {
+  let total = 0;
+  Object.keys(categoriesData).forEach(cat => {
+    const selects = form.querySelectorAll(`select[name="${cat}"]`);
+    let score = 0;
+    selects.forEach(sel => score += parseInt(sel.value));
+    document.getElementById(`score${cat}`).textContent = score;
+    total += score;
+  });
+  document.getElementById('scoreTotal').textContent = total;
+  updateProgress();
+});
+
+form.addEventListener('submit', function(event) {
+  let summary = '';
+  Object.keys(categoriesData).forEach(cat => {
+    const selects = form.querySelectorAll(`select[name="${cat}"]`);
+    if (selects.length > 0) {
+      summary += `\nCatégorie ${cat} :\n`;
+      selects.forEach(sel => {
+        const label = sel.parentElement.textContent.trim();
+        if(sel.value !== "0"){
+          summary += `- ${label} (Score: ${sel.value})\n`;
+        }
+      });
+    }
+  });
+  const scoreTotal = document.getElementById('scoreTotal').textContent;
+  summary += `\nScore total : ${scoreTotal}`;
+
+  document.getElementById('summaryField').value = summary;
+});
+</script>
+
+</body>
+</html>
