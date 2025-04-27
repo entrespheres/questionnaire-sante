@@ -213,7 +213,29 @@ form.addEventListener('change', () => {
   });
   document.getElementById('scoreTotal').textContent = total;
 });
+
+// Avant l'envoi du formulaire, remplir le champ Résumé avec toutes les réponses cochées
+form.addEventListener('submit', function(event) {
+  let summary = '';
+  categories.forEach(cat => {
+    const checkboxes = form.querySelectorAll(`input[name="${cat}"]:checked`);
+    if (checkboxes.length > 0) {
+      summary += `\nCatégorie ${cat} :\n`;
+      checkboxes.forEach(cb => {
+        const label = cb.parentElement.textContent.trim();
+        summary += `- ${label}\n`;
+      });
+    }
+  });
+
+  // Ajouter aussi le score total
+  const scoreTotal = document.getElementById('scoreTotal').textContent;
+  summary += `\nScore total : ${scoreTotal}`;
+
+  document.getElementById('summaryField').value = summary;
+});
 </script>
+
 
 </body>
 </html>
