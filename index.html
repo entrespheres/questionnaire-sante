@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questionnaire Bilan Santé Nutritionnel</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+      background: linear-gradient(135deg, #e0f7fa, #f9fbe7);
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      border-left: 6px solid #00acc1;
+    }
+    h1 {
+      color: #006064;
+      text-align: center;
+    }
+    legend {
+      color: #00796b;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    .score {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #007BFF;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+    input[type="email"] {
+      padding: 8px;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+  
+    @media (max-width: 600px) {
+      body {
+        margin: 10px;
+      }
+      .card {
+        padding: 15px;
+        border-left: 4px solid #00acc1;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      legend {
+        font-size: 1em;
+      }
+      button {
+        width: 100%;
+        font-size: 14px;
+      }
+      input[type="email"] {
+        width: 100%;
+      }
+    }
+    
+    .progress-container {
+      width: 100%;
+      background: #e0f2f1;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      height: 20px;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00acc1, #00796b);
+      transition: width 0.4s ease;
+    }
+    .progress-text {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #006064;
+    }
+    @media (max-width: 600px) {
+      body {
+        margin: 10px;
+      }
+      .card {
+        padding: 15px;
+        border-left: 4px solid #00acc1;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      legend {
+        font-size: 1em;
+      }
+      button {
+        width: 100%;
+        font-size: 14px;
+      }
+      input[type="email"] {
+        width: 100%;
+      }
+      .progress-container {
+        height: 16px;
+      }
+    }
+    </style>
+    
+    
+</head>
+<body>
+  <h1>Questionnaire Bilan Santé Nutritionnel</h1>
+  
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-text" id="progressText">0% complété</div>
+    <form id="healthForm"
+     action="https://formspree.io/f/mnqegznq" method="POST">
+    <!-- Catégorie A -->
+    <div class="card">
+      <fieldset>
+        <legend>A - Fatigue et troubles de l’humeur</legend>
+        <label><input type="checkbox" name="A" value="1"> Je me sens fatigué(e)</label>
+        <label><input type="checkbox" name="A" value="1"> Difficultés à me motiver</label>
+        <label><input type="checkbox" name="A" value="1"> Problèmes de sommeil</label>
+        <label><input type="checkbox" name="A" value="1"> Difficultés de concentration</label>
+        <label><input type="checkbox" name="A" value="1"> Difficultés de mémoire</label>
+        <label><input type="checkbox" name="A" value="1"> Je me sens anxieux(se)</label>
+        <label><input type="checkbox" name="A" value="1"> Je me sens angoissé(e)</label>
+        <label><input type="checkbox" name="A" value="1"> Je me sens déprimé(e)</label>
+        <div class="score">Score A: <span id="scoreA">0</span></div>
+      </fieldset>
+    </div>
+
+    <!-- Catégorie B -->
+    <div class="card">
+      <fieldset>
+        <legend>B - Troubles digestifs</legend>
+        <label><input type="checkbox" name="B" value="1"> Brûlures à l’estomac</label>
+        <label><input type="checkbox" name="B" value="1"> Reflux acides</label>
+        <label><input type="checkbox" name="B" value="1"> Nausées</label>
+        <label><input type="checkbox" name="B" value="1"> Diarrhées</label>
+        <label><input type="checkbox" name="B" value="1"> Constipation</label>
+        <label><input type="checkbox" name="B" value="1"> Alternances diarrhée/constipation</label>
+        <label><input type="checkbox" name="B" value="1"> Ballonnements après manger</label>
+        <label><input type="checkbox" name="B" value="1"> Crises de colite</label>
+        <div class="score">Score B: <span id="scoreB">0</span></div>
+      </fieldset>
+    </div>
+
+    <!-- Catégorie C -->
+    <div class="card">
+      <fieldset>
+        <legend>C - Troubles ostéo-articulaires et dégénératifs</legend>
+        <label><input type="checkbox" name="C" value="1"> Douleurs au niveau du dos, du cou</label>
+        <label><input type="checkbox" name="C" value="1"> Douleurs articulaires</label>
+        <label><input type="checkbox" name="C" value="1"> Douleurs dans les muscles, tendons</label>
+        <label><input type="checkbox" name="C" value="1"> Blessures fréquentes en sport</label>
+        <label><input type="checkbox" name="C" value="1"> Maladie rhumatismale</label>
+        <label><input type="checkbox" name="C" value="1"> Problèmes aux yeux (cataracte, sécheresse)</label>
+        <div class="score">Score C: <span id="scoreC">0</span></div>
+      </fieldset>
+    </div>
+
+    <!-- Catégorie D -->
+    <div class="card">
+      <fieldset>
+        <legend>D - Troubles infectieux</legend>
+        <label><input type="checkbox" name="D" value="1"> Maux de gorge, angines, rhumes, sinusites, otites</label>
+        <label><input type="checkbox" name="D" value="1"> Bronchites, infections pulmonaires</label>
+        <label><input type="checkbox" name="D" value="1"> Infections urinaires récurrentes</label>
+        <label><input type="checkbox" name="D" value="1"> Infections génitales récurrentes</label>
+        <label><input type="checkbox" name="D" value="1"> Infections digestives récurrentes</label>
+        <label><input type="checkbox" name="D" value="1"> Infections cutanées récurrentes</label>
+        <div class="score">Score D: <span id="scoreD">0</span></div>
+      </fieldset>
+    </div>
+
+    <!-- Catégorie E -->
+    <div class="card">
+      <fieldset>
+        <legend>E - Troubles cutanés</legend>
+        <label><input type="checkbox" name="E" value="1"> Peau sèche</label>
+        <label><input type="checkbox" name="E" value="1"> Eczéma fréquent</label>
+        <label><input type="checkbox" name="E" value="1"> Acné</label>
+        <label><input type="checkbox" name="E" value="1"> Herpès facial</label>
+        <label><input type="checkbox" name="E" value="1"> Perte de cheveux, cheveux ternes/cassants</label>
+        <label><input type="checkbox" name="E" value="1"> Ongles cassants/dédoublés</label>
+        <div class="score">Score E: <span id="scoreE">0</span></div>
+      </fieldset>
+    </div>
+
+    <!-- Catégorie F -->
+    <div class="card">
+      <fieldset>
+        <legend>F - Troubles circulatoires</legend>
+        <label><input type="checkbox" name="F" value="1"> Jambes lourdes</label>
+        <label><input type="checkbox" name="F" value="1"> Œdèmes (chevilles, mains, doigts)</label>
+        <label><input type="checkbox" name="F" value="1"> Extrémités froides</label>
+        <label><input type="checkbox" name="F" value="1"> Fourmillements aux extrémités</label>
+        <label><input type="checkbox" name="F" value="1"> Troubles prémenstruels</label>
+        <div class="score">Score F: <span id="scoreF">0</span></div>
+      </fieldset>
+    </div>
+
+    <!-- Catégorie G -->
+    <div class="card">
+      <fieldset>
+        <legend>G - Consommations régulières</legend>
+        <label><input type="checkbox" name="G" value="1"> Tabac : 1-4 cigarettes/jour (1 pt)</label>
+        <label><input type="checkbox" name="G" value="2"> Tabac : 5-15 cigarettes/jour (2 pts)</label>
+        <label><input type="checkbox" name="G" value="3"> Tabac : plus de 15 cigarettes/jour (3 pts)</label>
+        <label><input type="checkbox" name="G" value="1"> Alcool : plus de 3 verres/jour jusqu'à 75cl (1 pt)</label>
+        <label><input type="checkbox" name="G" value="2"> Alcool : entre 75cl et 150cl/jour (2 pts)</label>
+        <label><input type="checkbox" name="G" value="3"> Alcool : plus de 150cl/jour (3 pts)</label>
+        <label><input type="checkbox" name="G" value="2"> Médicaments réguliers (2 pts)</label>
+        <label><input type="checkbox" name="G" value="3"> Médicaments quotidiens (3 pts)</label>
+        <label><input type="checkbox" name="G" value="3"> Contraceptif oral ou stérilet (3 pts)</label>
+        <label><input type="checkbox" name="G" value="3"> Donneur de sang (3 pts)</label>
+        <div class="score">Score G: <span id="scoreG">0</span></div>
+      </fieldset>
+    </div>
+
+    <div class="card">
+      <div class="score">Score Total: <span id="scoreTotal">0</span></div>
+    </div>
+
+    <div class="card">
+      <label>Votre email : <input type="email" name="Email" required></label><br><br>
+      <button type="submit">Envoyer mes réponses</button>
+    </div>
+
+  </form>
+
+  <script>
+    const form = document.getElementById('healthForm');
+    const categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+
+    form.addEventListener('change', () => {
+      let total = 0;
+      categories.forEach(cat => {
+        const checkboxes = form.querySelectorAll(`input[name="${cat}"]:checked`);
+        let score = 0;
+        checkboxes.forEach(cb => score += parseInt(cb.value));
+        document.getElementById(`score${cat}`).textContent = score;
+        total += score;
+      });
+      document.getElementById('scoreTotal').textContent = total;
+    });
+  
+    // Progression dynamique
+    const totalCheckboxes = form.querySelectorAll('input[type="checkbox"]').length;
+    form.addEventListener('change', () => {
+      const checked = form.querySelectorAll('input[type="checkbox"]:checked').length;
+      const percentage = Math.round((checked / totalCheckboxes) * 100);
+      document.getElementById('progressBar').style.width = percentage + '%';
+      document.getElementById('progressText').textContent = percentage + '% complété';
+    });
+    </script>
+    
+
+</body>
+</html>
