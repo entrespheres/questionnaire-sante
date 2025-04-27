@@ -197,5 +197,23 @@ input[type="email"] {
 
 </form>
 
+<script>
+const form = document.getElementById('healthForm');
+const categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+
+form.addEventListener('change', () => {
+  let total = 0;
+  categories.forEach(cat => {
+    const checkboxes = form.querySelectorAll(`input[name="${cat}"]:checked`);
+    let score = 0;
+    checkboxes.forEach(cb => score += parseInt(cb.value));
+    const scoreSpan = document.getElementById(`score${cat}`);
+    if (scoreSpan) scoreSpan.textContent = score;
+    total += score;
+  });
+  document.getElementById('scoreTotal').textContent = total;
+});
+</script>
+
 </body>
 </html>
