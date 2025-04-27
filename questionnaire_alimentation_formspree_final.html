@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questionnaire Alimentation Complémentaire</title>
+<style>
+body { font-family: 'Arial', sans-serif; margin: 20px; background-color: #d0f0fd; }
+.card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px; border-left: 6px solid #00acc1; }
+.progress-container { width: 100%; background: #e0f2f1; border-radius: 10px; overflow: hidden; margin-bottom: 20px; height: 20px; }
+.progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #00acc1, #00796b); transition: width 0.4s ease; }
+.progress-text { text-align: center; font-weight: bold; margin-bottom: 20px; color: #006064; }
+h1 { color: #006064; text-align: center; margin-bottom: 10px; }
+p.instructions { text-align: center; font-size: 0.95em; color: #333; margin-bottom: 30px; }
+legend { color: #00796b; font-size: 1.2em; margin-bottom: 10px; }
+label { display: block; margin-bottom: 8px; color: #555; }
+.score { margin-top: 10px; font-weight: bold; color: #007BFF; }
+button { padding: 10px 20px; background-color: #00796b; color: white; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; display: block; margin: 20px auto; }
+button:hover { background-color: #004d40; }
+input[type="email"] { padding: 8px; width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 8px; margin-top: 10px; }
+@media (max-width: 600px) { body { margin: 10px; } .card { padding: 15px; border-left: 4px solid #00acc1; } h1 { font-size: 1.5em; } legend { font-size: 1em; } button { width: 100%; font-size: 14px; } }
+</style>
+</head>
+<body>
+
+<h1>Questionnaire Alimentation Complémentaire</h1>
+<p class="instructions">
+  <strong>Instructions :</strong><br>
+  0 = jamais<br>1 = 1 à 2 fois par semaine<br>2 = 2 à 3 fois par semaine<br>3 = 3 à 4 fois par semaine<br>5 = plus de 5 fois par semaine<br>6 = presque à chaque repas
+</p>
+
+<div class="progress-container">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+<div class="progress-text" id="progressText">0% complété</div>
+
+<form id="dietForm" action="https://formspree.io/f/xblolblj" method="POST">
+  <input type="hidden" name="Résumé" id="summaryField">
+  <div id="categories"></div>
+
+  <div class="card">
+    <div class="score">Score Total : <span id="scoreTotal">0</span></div>
+  </div>
+
+  <div class="card">
+    <label for="email">Votre email :</label>
+    <input type="email" id="email" name="email" required>
+    <button type="submit">Envoyer mes réponses</button>
+  </div>
+</form>
+
+<script>
+const categoriesData = {
+  'Alimentation': [
+    "Est-ce que vous consommez des poissons gras (maquereau, sardines, saumon) ?",
+    "Combien de fois par semaine consommez-vous du lait de vache ?",
+    "Combien de fois par semaine consommez-vous du pain blanc (baguette, pain de mie) ?",
+    "Combien de fois par semaine mangez-vous des féculents (pâtes, riz, pomme de terre,...) ?",
+    "Combien de fois par semaine mangez-vous des fruits ?",
+    "Combien de fois par semaine mangez-vous des légumes cuits ?",
+    "Combien de fois par semaine mangez-vous des crudités ?",
+    "Combien de fois par semaine mangez-vous des oléagineux (noisettes, amandes, noix de cajou, etc.) ?",
+    "Combien de fois mangez-vous de la viande rouge ou porcine par semaine ?",
+    "Combien de fois mangez-vous de la volaille par semaine (poulet, dinde,...) ?",
+    "Combien de fois mangez-vous du poisson par semaine ?",
+    "Combien de fois mangez-vous des œufs par semaine ?",
+    "Combien de fois par semaine consommez-vous des légumineuses (lentilles, pois, haricots blancs,...) ?",
+    "Combien de fois par semaine consommez-vous des pâtisseries (gâteaux, sucreries, barres chocolatées,...) ?",
+    "Combien de fois par semaine consommez-vous des viennoiseries (croissants, pains au chocolat,...) ?",
+    "Combien de fois mangez-vous des plats cuisinés par semaine ?",
+    "Combien de fois êtes-vous exposé(e) à plus de 30 min en continu à l'extérieur ?"
+  ],
+  'Boissons': [
+    "Quelle quantité de verres d'eau buvez-vous en moyenne par jour ?",
+    "Quelle quantité de tasses de café buvez-vous en moyenne par jour ?",
+    "Quelle quantité de tasses de thé buvez-vous en moyenne par jour ?",
+    "Quelle quantité de jus de fruits buvez-vous en moyenne par jour ?",
+    "Quelle quantité de verres de soda buvez-vous en moyenne par jour ?",
+    "Quelle quantité de verres d'alcool buvez-vous en moyenne par jour ?"
+  ]
+};
+
+const form = document.getElementById('dietForm');
+const container = document.getElementById('categories');
+
+Object.keys(categoriesData).forEach(cat => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  let html = `<fieldset><legend>${cat}</legend>`;
+  categoriesData[cat].forEach(q => {
+    html += `<label>${q}
+      <select name="${cat}" data-category="${cat}">
+        <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option>
+      </select>
+    </label>`;
+  });
+  html += `<div class="score">Score ${cat}: <span id="score${cat}">0</span></div></fieldset>`;
+  card.innerHTML = html;
+  container.appendChild(card);
+});
+
+function updateProgress() {
+  const selects = form.querySelectorAll('select');
+  const answered = Array.from(selects).filter(sel => sel.value !== "0").length;
+  const percentage = Math.round((answered / selects.length) * 100);
+  document.getElementById('progressBar').style.width = percentage + '%';
+  document.getElementById('progressText').textContent = percentage + '% complété';
+}
+
+form.addEventListener('change', () => {
+  let total = 0;
+  Object.keys(categoriesData).forEach(cat => {
+    const selects = form.querySelectorAll(`select[name="${cat}"]`);
+    let score = 0;
+    selects.forEach(sel => score += parseInt(sel.value));
+    document.getElementById(`score${cat}`).textContent = score;
+    total += score;
+  });
+  document.getElementById('scoreTotal').textContent = total;
+  updateProgress();
+});
+
+form.addEventListener('submit', function(event) {
+  let summary = '';
+  Object.keys(categoriesData).forEach(cat => {
+    const selects = form.querySelectorAll(`select[name="${cat}"]`);
+    if (selects.length > 0) {
+      summary += `
+Catégorie ${cat} :
+`;
+      selects.forEach(sel => {
+        const label = sel.parentElement.textContent.trim();
+        if(sel.value !== "0"){
+          summary += `- ${label} (Score: ${sel.value})
+`;
+        }
+      });
+    }
+  });
+  const scoreTotal = document.getElementById('scoreTotal').textContent;
+  summary += `
+Score total : ${scoreTotal}`;
+
+  document.getElementById('summaryField').value = summary;
+
+  setTimeout(() => {
+    alert('Merci pour votre envoi !');
+  }, 500);
+});
+</script>
+
+</body>
+</html>
