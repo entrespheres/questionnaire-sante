@@ -92,8 +92,6 @@
   <div class="progress-text" id="progressText">0% complété</div>
 
   <form id="healthForm">
-    <!-- Les catégories A à G avec sélection 0 à 3 -->
-
     <div id="categories"></div>
 
     <div class="card">
@@ -104,13 +102,13 @@
 
   <script>
     const categoriesData = {
-      'A': ["Je me sens fatigué(e)", "J’ai des difficultés à me motiver", "J’ai des problèmes de sommeil", "J’ai des difficultés de concentration", "J’ai des difficultés de mémoire", "Je me sens anxieux(se)", "Je me sens angoissé(e)", "Je me sens déprimé(e)"],
-      'B': ["Brûlures d'estomac", "Reflux acides", "Nausées", "Diarrhées", "Constipation", "Alternance diarrhée/constipation", "Ballonnements après manger", "Crises de colite"],
-      'C': ["Douleurs au dos, au cou", "Douleurs articulaires (poignets, coudes, etc.)", "Douleurs musculaires ou tendineuses", "Blessures fréquentes en sport", "Maladie rhumatismale", "Problèmes aux yeux (cataracte, sécheresse)"],
-      'D': ["Maux de gorge, angines, rhumes, sinusites, otites", "Bronchites, infections pulmonaires", "Infections urinaires récurrentes", "Infections génitales récurrentes", "Infections digestives récurrentes", "Infections cutanées récurrentes"],
-      'E': ["Peau sèche", "Eczéma fréquent", "Acné", "Herpès facial", "Perte de cheveux/cheveux cassants", "Ongles cassants/dédoublés"],
-      'F': ["Jambes lourdes", "Œdème (chevilles, mains, doigts...)", "Extrémités froides", "Fourmillements aux extrémités", "Troubles prémenstruels (seins tendus, douleurs, déprime)"],
-      'G': ["Tabac : 1-4 cigarettes/jour", "Tabac : 5-15 cigarettes/jour", "Tabac : >15 cigarettes/jour", "Alcool : plus de 3 verres jusqu'à 75cl/jour", "Alcool : entre 75cl et 150cl/jour", "Alcool : plus de 150cl/jour", "Médicaments réguliers", "Médicaments quotidiens", "Contraceptif oral (pilule)", "Stérilet", "Donneur de sang"]
+      'H - Fatigue et troubles de l’humeur': ["Je me sens fatigué(e)", "Difficultés à me motiver", "Problèmes de sommeil", "Difficultés de concentration", "Difficultés de mémoire", "Je me sens anxieux(se)", "Je me sens angoissé(e)", "Je me sens déprimé(e)"],
+      'I - Troubles digestifs': ["Brûlures d'estomac", "Reflux acides", "Nausées", "Diarrhées", "Constipation", "Alternance diarrhée/constipation", "Ballonnements après manger", "Crises de colite"],
+      'J - Troubles ostéo-articulaires et dégénératifs': ["Douleurs au dos, au cou", "Douleurs articulaires (poignets, coudes, etc.)", "Douleurs musculaires ou tendineuses", "Blessures fréquentes en sport", "Maladie rhumatismale", "Problèmes aux yeux (cataracte, sécheresse)"],
+      'K - Troubles infectieux': ["Maux de gorge, angines, rhumes, sinusites, otites", "Bronchites, infections pulmonaires", "Infections urinaires récurrentes", "Infections génitales récurrentes", "Infections digestives récurrentes", "Infections cutanées récurrentes"],
+      'L - Troubles cutanés': ["Peau sèche", "Eczéma fréquent", "Acné", "Herpès facial", "Perte de cheveux/cheveux cassants", "Ongles cassants/dédoublés"],
+      'M - Troubles circulatoires': ["Jambes lourdes", "Œdèmes (chevilles, mains, doigts...)", "Extrémités froides", "Fourmillements aux extrémités", "Troubles prémenstruels (seins tendus, douleurs, déprime)"],
+      'N - Consommations régulières': ["Tabac : 1-4 cigarettes/jour", "Tabac : 5-15 cigarettes/jour", "Tabac : >15 cigarettes/jour", "Alcool : plus de 3 verres jusqu'à 75cl/jour", "Alcool : entre 75cl et 150cl/jour", "Alcool : plus de 150cl/jour", "Médicaments réguliers", "Médicaments quotidiens", "Contraceptif oral (pilule)", "Stérilet", "Donneur de sang"]
     };
 
     const form = document.getElementById('healthForm');
@@ -119,11 +117,11 @@
     Object.keys(categoriesData).forEach(cat => {
       const card = document.createElement('div');
       card.className = 'card';
-      let html = `<fieldset><legend>${cat} - ${document.querySelector(`legend[for='${cat}']`)?.textContent || ''}</legend>`;
+      let html = `<fieldset><legend>${cat}</legend>`;
       categoriesData[cat].forEach((q, idx) => {
         html += `<label>${q}<select name="${cat}" data-category="${cat}"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>`;
       });
-      html += `<div class="score">Total Score ${cat}: <span id="score${cat}">0</span></div></fieldset>`;
+      html += `<div class="score">Total Score ${cat.split(' ')[0]}: <span id="score${cat.split(' ')[0]}">0</span></div></fieldset>`;
       card.innerHTML = html;
       container.appendChild(card);
     });
@@ -134,7 +132,7 @@
         const selects = form.querySelectorAll(`select[name="${cat}"]`);
         let score = 0;
         selects.forEach(sel => score += parseInt(sel.value));
-        document.getElementById(`score${cat}`).textContent = score;
+        document.getElementById(`score${cat.split(' ')[0]}`).textContent = score;
         total += score;
       });
       document.getElementById('scoreTotal').textContent = total;
