@@ -95,7 +95,6 @@
 
   <form id="healthForm" action="https://formspree.io/f/xblolblj" method="POST">
     <input type="hidden" name="_subject" value="Nouveau Questionnaire Santé">
-    <input type="hidden" name="_next" value="https://entrespheres.github.io/questionnaire-sante/questionnaire-neurotransmetteurs.html">
 
     <div id="categories"></div>
 
@@ -150,6 +149,26 @@
       const percentage = Math.round((answered / totalQuestions) * 100);
       document.getElementById('progressBar').style.width = percentage + '%';
       document.getElementById('progressText').textContent = percentage + '% complété';
+    });
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const formData = new FormData(form);
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = 'https://entrespheres.github.io/questionnaire-sante/questionnaire-neurotransmetteurs.html';
+        } else {
+          alert('Une erreur est survenue, merci de réessayer.');
+        }
+      }).catch(error => {
+        alert('Erreur de connexion, merci de réessayer.');
+      });
     });
   </script>
 </body>
