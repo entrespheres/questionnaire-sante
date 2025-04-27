@@ -1,107 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questionnaire Bilan Santé Nutritionnel</title>
-<style>
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 20px;
-  background: linear-gradient(135deg, #e0f7fa, #f9fbe7);
-}
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  border-left: 6px solid #00acc1;
-}
-h1 {
-  color: #006064;
-  text-align: center;
-  margin-bottom: 30px;
-}
-legend {
-  color: #00796b;
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
-label {
-  display: block;
-  margin-bottom: 8px;
-  color: #555;
-}
-.score {
-  margin-top: 10px;
-  font-weight: bold;
-  color: #007BFF;
-}
-button {
-  padding: 10px 20px;
-  background-color: #00796b;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  display: block;
-  margin: 20px auto;
-}
-button:hover {
-  background-color: #004d40;
-}
-input[type="email"] {
-  padding: 8px;
-  width: 100%;
-  max-width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-@media (max-width: 600px) {
-  body {
-    margin: 10px;
-  }
-  .card {
-    padding: 15px;
-    border-left: 4px solid #00acc1;
-  }
-  h1 {
-    font-size: 1.5em;
-  }
-  legend {
-    font-size: 1em;
-  }
-  button {
-    width: 100%;
-    font-size: 14px;
-  }
-  input[type="email"] {
-    width: 100%;
-  }
-}
-</style>
-</head>
-<body>
-<h1>Questionnaire Bilan Santé Nutritionnel</h1>
-
-<form id="healthForm" action="https://formspree.io/f/xldbdooj" method="POST">
-  <input type="hidden" name="Résumé" id="summaryField">
-
-
-<div class="card">
-  <div class="score">Score Total: <span id="scoreTotal">0</span></div>
-</div>
-<div class="card">
-  <label>Votre email : <input type="email" name="Email" required></label><br><br>
-  <button type="submit">Envoyer mes réponses</button>
-</div>
-
-</form>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Questionnaire Bilan Santé Nutritionnel</title>
@@ -203,48 +102,49 @@ input[type="email"] {
 
   </form>
 
- 
-</html>
+  <script>
+    const categoriesData = {
+      'A - Fatigue et troubles de l’humeur': ["Je me sens fatigué(e)", "J’ai des difficultés à me motiver", "J’ai des problèmes de sommeil", "J’ai des difficultés de concentration", "J’ai des difficultés de mémoire", "Je me sens anxieux(se)", "Je me sens angoissé(e)", "Je me sens déprimé(e)"],
+      'B - Troubles digestifs': ["Brûlures d'estomac", "Reflux acides", "Nausées", "Diarrhées", "Constipation", "Alternance diarrhée/constipation", "Ballonnements après manger", "Crises de colite"],
+      'C - Troubles ostéo-articulaires et dégénératifs': ["Douleurs au dos, au cou", "Douleurs articulaires (poignets, coudes, etc.)", "Douleurs musculaires ou tendineuses", "Blessures fréquentes en sport", "Maladie rhumatismale", "Problèmes aux yeux (cataracte, sécheresse)"],
+      'D - Troubles infectieux': ["Maux de gorge, angines, rhumes, sinusites, otites", "Bronchites, infections pulmonaires", "Infections urinaires récurrentes", "Infections génitales récurrentes", "Infections digestives récurrentes", "Infections cutanées récurrentes"],
+      'E - Troubles cutanés': ["Peau sèche", "Eczéma fréquent", "Acné", "Herpès facial", "Perte de cheveux/cheveux cassants", "Ongles cassants/dédoublés"],
+      'F - Troubles circulatoires': ["Jambes lourdes", "Œdème (chevilles, mains, doigts...)", "Extrémités froides", "Fourmillements aux extrémités", "Troubles prémenstruels (seins tendus, douleurs, déprime)"],
+      'G - Consommations régulières': ["Tabac : 1-4 cigarettes/jour", "Tabac : 5-15 cigarettes/jour", "Tabac : >15 cigarettes/jour", "Alcool : plus de 3 verres jusqu'à 75cl/jour", "Alcool : entre 75cl et 150cl/jour", "Alcool : plus de 150cl/jour", "Médicaments réguliers", "Médicaments quotidiens", "Contraceptif oral (pilule)", "Stérilet", "Donneur de sang"]
+    };
 
-<script>
-const form = document.getElementById('healthForm');
-const categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    const form = document.getElementById('healthForm');
+    const container = document.getElementById('categories');
 
-form.addEventListener('change', () => {
-  let total = 0;
-  categories.forEach(cat => {
-    const checkboxes = form.querySelectorAll(`input[name="${cat}"]:checked`);
-    let score = 0;
-    checkboxes.forEach(cb => score += parseInt(cb.value));
-    const scoreSpan = document.getElementById(`score${cat}`);
-    if (scoreSpan) scoreSpan.textContent = score;
-    total += score;
-  });
-  document.getElementById('scoreTotal').textContent = total;
-});
-
-// Avant l'envoi du formulaire, remplir le champ Résumé avec toutes les réponses cochées
-form.addEventListener('submit', function(event) {
-  let summary = '';
-  categories.forEach(cat => {
-    const checkboxes = form.querySelectorAll(`input[name="${cat}"]:checked`);
-    if (checkboxes.length > 0) {
-      summary += `\nCatégorie ${cat} :\n`;
-      checkboxes.forEach(cb => {
-        const label = cb.parentElement.textContent.trim();
-        summary += `- ${label}\n`;
+    Object.keys(categoriesData).forEach(cat => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      let html = `<fieldset><legend>${cat}</legend>`;
+      categoriesData[cat].forEach((q, idx) => {
+        html += `<label>${q}<select name="${cat}" data-category="${cat}"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>`;
       });
-    }
-  });
+      html += `<div class="score">Total Score ${cat.split(' ')[0]}: <span id="score${cat.split(' ')[0]}">0</span></div></fieldset>`;
+      card.innerHTML = html;
+      container.appendChild(card);
+    });
 
-  // Ajouter aussi le score total
-  const scoreTotal = document.getElementById('scoreTotal').textContent;
-  summary += `\nScore total : ${scoreTotal}`;
+    form.addEventListener('change', () => {
+      let total = 0;
+      Object.keys(categoriesData).forEach(cat => {
+        const selects = form.querySelectorAll(`select[name="${cat}"]`);
+        let score = 0;
+        selects.forEach(sel => score += parseInt(sel.value));
+        document.getElementById(`score${cat.split(' ')[0]}`).textContent = score;
+        total += score;
+      });
+      document.getElementById('scoreTotal').textContent = total;
 
-  document.getElementById('summaryField').value = summary;
-});
-</script>
-
-
+      const totalQuestions = form.querySelectorAll('select').length;
+      const answered = Array.from(form.querySelectorAll('select')).filter(sel => sel.value !== "0").length;
+      const percentage = Math.round((answered / totalQuestions) * 100);
+      document.getElementById('progressBar').style.width = percentage + '%';
+      document.getElementById('progressText').textContent = percentage + '% complété';
+    });
+  </script>
 </body>
 </html>
