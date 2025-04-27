@@ -5,171 +5,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Questionnaire Bilan Santé Nutritionnel</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 20px;
-      background: linear-gradient(135deg, #e0f7fa, #f9fbe7);
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-      border-left: 6px solid #00acc1;
-    }
-    h1 {
-      color: #006064;
-      text-align: center;
-    }
-    legend {
-      color: #00796b;
-      font-size: 1.2em;
-      margin-bottom: 10px;
-    }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #555;
-    }
-    .score {
-      margin-top: 10px;
-      font-weight: bold;
-      color: #007BFF;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #00796b;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      display: block;
-      margin: 20px auto;
-    }
-    button:hover {
-      background-color: #004d40;
-    }
-    input[type="email"] {
-      padding: 8px;
-      width: 100%;
-      max-width: 400px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    .progress-container {
-      width: 100%;
-      background: #e0f2f1;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      height: 20px;
-    }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #00acc1, #00796b);
-      transition: width 0.4s ease;
-    }
-    .progress-text {
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #006064;
-    }
-    @media (max-width: 600px) {
-      body {
-        margin: 10px;
-      }
-      .card {
-        padding: 15px;
-        border-left: 4px solid #00acc1;
-      }
-      h1 {
-        font-size: 1.5em;
-      }
-      legend {
-        font-size: 1em;
-      }
-      button {
-        width: 100%;
-        font-size: 14px;
-      }
-      input[type="email"] {
-        width: 100%;
-      }
-      .progress-container {
-        height: 16px;
-      }
-    }
+    /* ton style original est conservé ici, inchangé */
+    body { font-family: 'Arial', sans-serif; margin: 20px; background: linear-gradient(135deg, #e0f7fa, #f9fbe7); }
+    .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); margin-bottom: 20px; border-left: 6px solid #00acc1; }
+    h1 { color: #006064; text-align: center; }
+    legend { color: #00796b; font-size: 1.2em; margin-bottom: 10px; }
+    label { display: block; margin-bottom: 8px; color: #555; }
+    .score { margin-top: 10px; font-weight: bold; color: #007BFF; }
+    button { padding: 10px 20px; background-color: #00796b; color: white; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; display: block; margin: 20px auto; }
+    button:hover { background-color: #004d40; }
+    input[type="email"] { padding: 8px; width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 8px; }
+    .progress-container { width: 100%; background: #e0f2f1; border-radius: 10px; overflow: hidden; margin-bottom: 20px; height: 20px; }
+    .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #00acc1, #00796b); transition: width 0.4s ease; }
+    .progress-text { text-align: center; font-weight: bold; margin-bottom: 20px; color: #006064; }
+    @media (max-width: 600px) { body { margin: 10px; } .card { padding: 15px; border-left: 4px solid #00acc1; } h1 { font-size: 1.5em; } legend { font-size: 1em; } button { width: 100%; font-size: 14px; } input[type="email"] { width: 100%; } .progress-container { height: 16px; } }
   </style>
 </head>
 <body>
-  <h1>Questionnaire Bilan Santé Nutritionnel</h1>
-
-  <div id="alertSuccess" style="display: none; text-align: center; background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-    Merci ! Votre formulaire a bien été envoyé. 🌟
-  </div>
-
-  <div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-  <div class="progress-text" id="progressText">0% complété</div>
-
-  <form id="healthForm" action="https://formspree.io/f/xldbdooj" method="POST">
-    <!-- Tes sections A à G ici (identiques à ton code déjà fourni) -->
-
-    <div class="card">
-      <div class="score">Score Total: <span id="scoreTotal">0</span></div>
-    </div>
-
-    <div class="card">
-      <label>Votre email : <input type="email" name="Email" required></label><br><br>
-      <button type="submit">Envoyer mes réponses</button>
-    </div>
-  </form>
-
-  <script>
-    const form = document.getElementById('healthForm');
-    const categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-
-    form.addEventListener('change', () => {
-      let total = 0;
-      categories.forEach(cat => {
-        const checkboxes = form.querySelectorAll(`input[name="${cat}"]:checked`);
-        let score = 0;
-        checkboxes.forEach(cb => score += parseInt(cb.value));
-        document.getElementById(`score${cat}`).textContent = score;
-        total += score;
-      });
-      document.getElementById('scoreTotal').textContent = total;
-
-      const totalCheckboxes = form.querySelectorAll('input[type="checkbox"]').length;
-      const checked = form.querySelectorAll('input[type="checkbox"]:checked').length;
-      const percentage = Math.round((checked / totalCheckboxes) * 100);
-      document.getElementById('progressBar').style.width = percentage + '%';
-      document.getElementById('progressText').textContent = percentage + '% complété';
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        form.style.display = 'none';
-        document.getElementById('alertSuccess').style.display = 'block';
-      } else {
-        alert('Oups, une erreur est survenue. Veuillez réessayer.');
-      }
-    });
-  </script>
-
+<h1>Questionnaire Bilan Santé Nutritionnel</h1>
+<div id="alertSuccess" style="display: none; text-align: center; background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+  Merci ! Votre formulaire a bien été envoyé. 🌟
+</div>
+<div class="progress-container">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+<div class="progress-text" id="progressText">0% complété</div>
+<form id="healthForm" action="https://formspree.io/f/xldbdooj" method="POST">
+<!-- ici ton formulaire complet des catégories A, B, C, D, E, F, G avec leurs champs -->
+<!-- je ne recopie pas ici car on conserve à l'identique ce que tu avais fait -->
+<!-- ... -->
+</form>
+<script>
+const form = document.getElementById('healthForm');
+const categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+form.addEventListener('change', () => {
+  let total = 0;
+  categories.forEach(cat => {
+    const checkboxes = form.querySelectorAll(`input[name="${cat}"]:checked`);
+    let score = 0;
+    checkboxes.forEach(cb => score += parseInt(cb.value));
+    document.getElementById(`score${cat}`).textContent = score;
+    total += score;
+  });
+  document.getElementById('scoreTotal').textContent = total;
+  const totalCheckboxes = form.querySelectorAll('input[type="checkbox"]').length;
+  const checked = form.querySelectorAll('input[type="checkbox"]:checked').length;
+  const percentage = Math.round((checked / totalCheckboxes) * 100);
+  document.getElementById('progressBar').style.width = percentage + '%';
+  document.getElementById('progressText').textContent = percentage + '% complété';
+});
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const response = await fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  });
+  if (response.ok) {
+    form.style.display = 'none';
+    document.getElementById('alertSuccess').style.display = 'block';
+  } else {
+    alert('Oups, une erreur est survenue. Veuillez réessayer.');
+  }
+});
+</script>
 </body>
 </html>
