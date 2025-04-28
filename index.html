@@ -91,10 +91,15 @@
   <div class="progress-container">
     <div class="progress-bar" id="progressBar"></div>
   </div>
-  <div class="progress-text" id="progressText">0% complété</div>
+  
+
+  <div class="legend-description">
+    0 = symptôme absent | 1 = symptôme modéré | 2 = symptôme gênant | 3 = symptôme très gênant
+  </div>
 
   <form id="healthForm" action="https://formspree.io/f/xblolblj" method="POST">
     <input type="hidden" name="_subject" value="Nouveau Questionnaire Neurotransmetteurs">
+    <input type="hidden" name="Résumé" id="summaryField">
 
     <div id="categories"></div>
 
@@ -154,6 +159,21 @@
     form.addEventListener('submit', function(event) {
       event.preventDefault();
       const formData = new FormData(form);
+
+      // Construction du résumé complet
+      let summary = '';
+      Object.keys(categoriesData).forEach(cat => {
+        summary += `Catégorie ${cat} :\n`;
+        const selects = form.querySelectorAll(`select[name="${cat}"]`);
+        selects.forEach(select => {
+          const label = select.parentElement.textContent.split('0')[0].trim();
+          summary += `- ${label} : ${select.value}\n`;
+        });
+        summary += `\n`;
+      });
+
+      formData.set('Résumé', summary);
+
       fetch(form.action, {
         method: 'POST',
         body: formData,
