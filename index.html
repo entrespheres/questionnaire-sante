@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,84 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Questionnaire Bilan Santé Nutritionnel</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 20px;
-      background: linear-gradient(135deg, #e0f7fa, #f9fbe7);
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-      border-left: 6px solid #00acc1;
-    }
-    h1 {
-      color: #006064;
-      text-align: center;
-    }
-    legend {
-      color: #00796b;
-      font-size: 1.2em;
-      margin-bottom: 10px;
-    }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #555;
-    }
-    .score {
-      margin-top: 10px;
-      font-weight: bold;
-      color: #007BFF;
-    }
-    select {
-      margin-left: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #00796b;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      display: block;
-      margin: 20px auto;
-    }
-    button:hover {
-      background-color: #004d40;
-    }
-    input[type="email"] {
-      padding: 8px;
-      width: 100%;
-      max-width: 400px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      display: block;
-      margin: 20px auto;
-    }
-    .progress-container {
-      width: 100%;
-      background: #e0f2f1;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      height: 20px;
-    }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #00acc1, #00796b);
-      transition: width 0.4s ease;
-    }
-    .progress-text {
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #006064;
-    }
+    body { font-family: 'Arial', sans-serif; margin: 20px; background: linear-gradient(135deg, #e0f7fa, #f9fbe7); }
+    .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); margin-bottom: 20px; border-left: 6px solid #00acc1; }
+    h1 { color: #006064; text-align: center; }
+    legend { color: #00796b; font-size: 1.2em; margin-bottom: 10px; }
+    label { display: block; margin-bottom: 8px; color: #555; }
+    .score { margin-top: 10px; font-weight: bold; color: #007BFF; }
+    select { margin-left: 10px; }
+    button { padding: 10px 20px; background-color: #00796b; color: white; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; display: block; margin: 20px auto; }
+    button:hover { background-color: #004d40; }
+    input[type="email"] { padding: 8px; width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 8px; display: block; margin: 20px auto; }
+    .progress-container { width: 100%; background: #e0f2f1; border-radius: 10px; overflow: hidden; margin-bottom: 20px; height: 20px; }
+    .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #00acc1, #00796b); transition: width 0.4s ease; }
+    .progress-text { text-align: center; font-weight: bold; margin-bottom: 20px; color: #006064; }
+    .legend-description { text-align: center; font-size: 16px; margin-bottom: 20px; color: #00796b; }
   </style>
 </head>
 <body>
@@ -91,7 +28,6 @@
   <div class="progress-container">
     <div class="progress-bar" id="progressBar"></div>
   </div>
-  
 
   <div class="legend-description">
     0 = symptôme absent | 1 = symptôme modéré | 2 = symptôme gênant | 3 = symptôme très gênant
@@ -114,13 +50,13 @@
 
   <script>
     const categoriesData = {
-      'H - Fatigue et troubles de l’humeur': ["Je me sens fatigué(e)", "Difficultés à me motiver", "Problèmes de sommeil", "Difficultés de concentration", "Difficultés de mémoire", "Je me sens anxieux(se)", "Je me sens angoissé(e)", "Je me sens déprimé(e)"],
-      'I - Troubles digestifs': ["Brûlures d'estomac", "Reflux acides", "Nausées", "Diarrhées", "Constipation", "Alternance diarrhée/constipation", "Ballonnements après manger", "Crises de colite"],
-      'J - Troubles ostéo-articulaires et dégénératifs': ["Douleurs au dos, au cou", "Douleurs articulaires (poignets, coudes, etc.)", "Douleurs musculaires ou tendineuses", "Blessures fréquentes en sport", "Maladie rhumatismale", "Problèmes aux yeux (cataracte, sécheresse)"],
-      'K - Troubles infectieux': ["Maux de gorge, angines, rhumes, sinusites, otites", "Bronchites, infections pulmonaires", "Infections urinaires récurrentes", "Infections génitales récurrentes", "Infections digestives récurrentes", "Infections cutanées récurrentes"],
-      'L - Troubles cutanés': ["Peau sèche", "Eczéma fréquent", "Acné", "Herpès facial", "Perte de cheveux/cheveux cassants", "Ongles cassants/dédoublés"],
-      'M - Troubles circulatoires': ["Jambes lourdes", "Œdèmes (chevilles, mains, doigts...)", "Extrémités froides", "Fourmillements aux extrémités", "Troubles prémenstruels (seins tendus, douleurs, déprime)"],
-      'N - Consommations régulières': ["Tabac : 1-4 cigarettes/jour", "Tabac : 5-15 cigarettes/jour", "Tabac : >15 cigarettes/jour", "Alcool : plus de 3 verres jusqu'à 75cl/jour", "Alcool : entre 75cl et 150cl/jour", "Alcool : plus de 150cl/jour", "Médicaments réguliers", "Médicaments quotidiens", "Contraceptif oral (pilule)", "Stérilet", "Donneur de sang"]
+      'A - Fatigue et troubles de l’humeur': ["Je me sens fatigué(e)", "Difficultés à me motiver", "Problèmes de sommeil", "Difficultés de concentration", "Difficultés de mémoire", "Je me sens anxieux(se)", "Je me sens angoissé(e)", "Je me sens déprimé(e)"],
+      'B - Troubles digestifs': ["Brûlures d'estomac", "Reflux acides", "Intolérance alimentaire", "Allergie", "Nausées", "Diarrhées", "Constipation", "Alternance diarrhée/constipation", "Pets très odorants", "Ballonnements après manger", "Mauvaise haleine", "Maux de ventre"],
+      'C - Troubles ostéo-articulaires et dégénératifs': ["Douleurs au dos, au cou", "Douleurs articulaires (poignets, coudes, etc.)", "Douleurs musculaires ou tendineuses", "Blessures fréquentes en sport", "Maladie rhumatismale", "Problèmes aux yeux (cataracte, sécheresse)"],
+      'D - Troubles infectieux': ["Maux de gorge, angines, rhumes, sinusites, otites", "Bronchites, infections pulmonaires", "Infections urinaires récurrentes", "Infections génitales récurrentes", "Infections digestives récurrentes", "Infections cutanées récurrentes"],
+      'E - Troubles cutanés': ["Peau sèche", "Eczéma fréquent", "Acné", "Herpès facial", "Perte de cheveux/cheveux cassants", "Ongles cassants/dédoublés"],
+      'F - Troubles circulatoires': ["Jambes lourdes", "Œdèmes (chevilles, mains, doigts...)", "Extrémités froides", "Fourmillements aux extrémités", "Troubles prémenstruels (seins tendus, douleurs, déprime)"],
+      'G - Consommations régulières': ["Tabac : 1-4 cigarettes/jour", "Tabac : 5-15 cigarettes/jour", "Tabac : >15 cigarettes/jour", "Alcool : plus de 3 verres jusqu'à 75cl/jour", "Alcool : entre 75cl et 150cl/jour", "Alcool : plus de 150cl/jour", "Médicaments réguliers", "Médicaments quotidiens", "Contraceptif oral (pilule)", "Stérilet"]
     };
 
     const form = document.getElementById('healthForm');
@@ -130,7 +66,7 @@
       const card = document.createElement('div');
       card.className = 'card';
       let html = `<fieldset><legend>${cat}</legend>`;
-      categoriesData[cat].forEach((q, idx) => {
+      categoriesData[cat].forEach(q => {
         html += `<label>${q}<select name="${cat}" data-category="${cat}"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>`;
       });
       html += `<div class="score">Total Score ${cat.split(' ')[0]}: <span id="score${cat.split(' ')[0]}">0</span></div></fieldset>`;
@@ -160,7 +96,6 @@
       event.preventDefault();
       const formData = new FormData(form);
 
-      // Construction du résumé complet
       let summary = '';
       Object.keys(categoriesData).forEach(cat => {
         summary += `Catégorie ${cat} :\n`;
