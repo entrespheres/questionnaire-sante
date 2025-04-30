@@ -1,107 +1,107 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questionnaire Neurotransmetteurs</title>
-<style>
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 20px;
-  background: linear-gradient(135deg, #e0f7fa, #f9fbe7);
-}
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  border-left: 6px solid #00acc1;
-}
-.progress-container {
-  width: 100%;
-  background: #e0f2f1;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  height: 20px;
-}
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #00acc1, #00796b);
-  transition: width 0.4s ease;
-}
-.progress-text {
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #006064;
-}
-h1 {
-  color: #006064;
-  text-align: center;
-  margin-bottom: 30px;
-}
-legend {
-  color: #00796b;
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
-label {
-  display: block;
-  margin-bottom: 8px;
-  color: #555;
-}
-.score {
-  margin-top: 10px;
-  font-weight: bold;
-  color: #007BFF;
-}
-button {
-  padding: 10px 20px;
-  background-color: #00796b;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  display: block;
-  margin: 20px auto;
-}
-button:hover {
-  background-color: #004d40;
-}
-input[type="email"] {
-  padding: 8px;
-  width: 100%;
-  max-width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-@media (max-width: 600px) {
-  body {
-    margin: 10px;
-  }
-  .card {
-    padding: 15px;
-    border-left: 4px solid #00acc1;
-  }
-  h1 {
-    font-size: 1.5em;
-  }
-  legend {
-    font-size: 1em;
-  }
-  button {
-    width: 100%;
-    font-size: 14px;
-  }
-  input[type="email"] {
-    width: 100%;
-  }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questionnaire Neurotransmetteurs</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+      background: linear-gradient(135deg, #e0f7fa, #f9fbe7);
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      border-left: 6px solid #00acc1;
+    }
+    .progress-container {
+      width: 100%;
+      background: #e0f2f1;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      height: 20px;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00acc1, #00796b);
+      transition: width 0.4s ease;
+    }
+    .progress-text {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #006064;
+    }
+    h1 {
+      color: #006064;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    legend {
+      color: #00796b;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    .score {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #007BFF;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+    input[type="email"] {
+      padding: 8px;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    @media (max-width: 600px) {
+      body {
+        margin: 10px;
+      }
+      .card {
+        padding: 15px;
+        border-left: 4px solid #00acc1;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      legend {
+        font-size: 1em;
+      }
+      button {
+        width: 100%;
+        font-size: 14px;
+      }
+      input[type="email"] {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -112,7 +112,7 @@ input[type="email"] {
 </div>
 <div class="progress-text" id="progressText">0% complété</div>
 
-<form id="healthForm" action="#" method="POST">
+<form id="healthForm" action="https://formspree.io/f/xkgroyeo" method="POST">
   <input type="hidden" name="Résumé" id="summaryField">
 
   <div id="categories"></div>
@@ -122,7 +122,9 @@ input[type="email"] {
   </div>
 
   <div class="card">
-    <label>Votre email : <input type="email" name="Email" required></label><br><br>
+    <label>Votre email :
+      <input type="email" name="_replyto" required>
+    </label><br><br>
     <button type="submit">Envoyer mes réponses</button>
   </div>
 </form>
@@ -170,6 +172,7 @@ const categoriesData = {
 const form = document.getElementById('healthForm');
 const container = document.getElementById('categories');
 
+// Génération dynamique du questionnaire
 Object.keys(categoriesData).forEach(cat => {
   const card = document.createElement('div');
   card.className = 'card';
@@ -226,8 +229,10 @@ form.addEventListener('submit', function(event) {
   });
   const scoreTotal = document.getElementById('scoreTotal').textContent;
   summary += `\nScore total : ${scoreTotal}`;
-
   document.getElementById('summaryField').value = summary;
+
+  // Confirmation (facultative)
+  setTimeout(() => alert("Merci ! Vos réponses ont bien été envoyées."), 200);
 });
 </script>
 
