@@ -66,8 +66,22 @@
       const card = document.createElement('div');
       card.className = 'card';
       let html = `<fieldset><legend>${cat}</legend>`;
-      categoriesData[cat].forEach(q => {
-        html += `<label>${q}<select name="${cat}" data-category="${cat}"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>`;
+      categoriesData[cat].forEach((q, i) => {
+  const selectId = `${cat}_${i}`;
+  html += `<label>${q}<select name="${selectId}" data-category="${cat}">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+           </select>`;
+
+  // Ajouter un champ texte pour "Allergie"
+  if (q.toLowerCase().includes("allergie")) {
+    html += `<input type="text" name="${selectId}_detail" placeholder="Précisez le type d'allergie" style="margin-top:5px; display:block; width:100%; max-width:400px; padding:6px; border-radius:6px; border:1px solid #ccc;">`;
+  }
+
+  html += `</label>`;
+
       });
       html += `<div class="score">Total Score ${cat.split(' ')[0]}: <span id="score${cat.split(' ')[0]}">0</span></div></fieldset>`;
       card.innerHTML = html;
@@ -103,6 +117,20 @@
         selects.forEach(select => {
           const label = select.parentElement.textContent.split('0')[0].trim();
           summary += `- ${label} : ${select.value}\n`;
+          selects.forEach(select => {
+  const label = select.parentElement.textContent.split('0')[0].trim();
+  summary += `- ${label} : ${select.value}`;
+  
+  // Si c'est une allergie, ajouter le détail
+  if (label.toLowerCase().includes("allergie")) {
+    const detailInput = select.parentElement.querySelector('input');
+    if (detailInput && detailInput.value.trim() !== '') {
+      summary += ` (Détail : ${detailInput.value.trim()})`;
+    }
+  }
+
+  summary += `\n`;
+});
         });
         summary += `\n`;
       });
