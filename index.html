@@ -171,9 +171,12 @@
                   <option value="2">2</option>
                   <option value="3">3</option>
                 </select>`;
-        if (q.toLowerCase().includes("allergie")) {
-          html += `<input type="text" name="${selectId}_detail" placeholder="Précisez le type d'allergie" style="margin-top:5px; display:block; width:100%; max-width:400px; padding:6px; border-radius:6px; border:1px solid #ccc;">`;
-        }
+      if (q.toLowerCase().includes("allergie") || q.toLowerCase().includes("médicaments quotidiens")) {
+  const placeholder = q.toLowerCase().includes("allergie")
+    ? "Précisez le type d'allergie"
+    : "Précisez les médicaments";
+  html += `<input type="text" name="${selectId}_detail" placeholder="${placeholder}" style="margin-top:5px; display:block; width:100%; max-width:400px; padding:6px; border-radius:6px; border:1px solid #ccc;">`;
+}
         html += `</label>`;
       });
       html += `<div class="score">Total Score ${cat.split(' ')[0]}: <span id="score${cat.split(' ')[0]}">0</span></div></fieldset>`;
